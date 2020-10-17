@@ -9,8 +9,8 @@ on:
     paths: 'cfn/oai_hosting/**'
 
 env:
-  NAKED_DOMAIN: toitem.info
-  SUB_DOMAIN: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
+  NAKED_DOMAIN_NAME: toitem.info
+  SUB_DOMAIN_NAME: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
   ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
 
 jobs:
@@ -39,7 +39,7 @@ jobs:
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
               Environment=$ENVIRONMENT \
-              NakedDomain=$NAKED_DOMAIN \
-              SubDomain=$SUB_DOMAIN \
+              NakedDomainName=$NAKED_DOMAIN_NAME \
+              SubDomainName=$SUB_DOMAIN_NAME \
               HostingBucketName=${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT \
               CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_ID }}
