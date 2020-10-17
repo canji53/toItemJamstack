@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Transform: AWS::Serverless-2016-10-31
+Description: toItem for lambda@edge.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Default: toItem
+
+Globals:
+  Function:
+    Runtime: nodejs12.x
+    MemorySize: 128
+    Timeout: 3
+
+Resources:
+  CloudfrontRedirectRootobjects:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ServiceName}-cloudfront-redirect-rootobjects
+      CodeUri: cloudfront-redirect-rootobjects/
+      Handler: app.lambdaHandler
+      Role: !GetAtt CloudfrontRedirectRootobjectsRole.Arn
+
+  CloudfrontRedirectRootobjectsRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ServiceName}-cloudfront-redirect-rootobjects-role
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - edgelambda.amazonaws.com
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
+Outputs:
+  CloudfrontRedirectRootobjectsArn:
+    Value: !GetAtt CloudfrontRedirectRootobjects.Arn
