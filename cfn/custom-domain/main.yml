@@ -5,7 +5,7 @@ Parameters:
   ServiceName:
     Type: String
     Default: toitem
-  NakidDomainName:
+  NakedDomainName:
     Type: String
     NoEcho: true
   CFSSLCertificateId:
@@ -22,7 +22,7 @@ Resources:
   DomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
-      DomainName: !Sub api.${NakidDomainName}
+      DomainName: !Sub api.${NakedDomainName}
       EndpointConfiguration:
         Types:
           - REGIONAL
