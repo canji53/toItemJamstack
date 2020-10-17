@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Custom domain for api.
+
+Parameters:
+  ServiceName:
+    Type: String
+    Default: toitem
+  NakidDomainName:
+    Type: String
+    NoEcho: true
+  CFSSLCertificateId:
+    Type: String
+    NoEcho: true
+  # ApiGatewayProdId:
+  #   Type: String
+  #   NoEcho: true
+  ApiGatewayStgId:
+    Type: String
+    NoEcho: true
+
+Resources:
+  DomainName:
+    Type: AWS::ApiGateway::DomainName
+    Properties:
+      DomainName: !Sub api.${NakidDomainName}
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+      RegionalCertificateArn: !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/${CFSSLCertificateId}
+
+  # BasePathMappingProd:
+  #   Type: AWS::ApiGateway::BasePathMapping
+  #   Properties:
+  #     RestApiId: !Ref ApiGatewayProdId
+  #     DomainName: !Ref DomainName
+  #     Stage: prod
+  #     BasePath: prod
+
+  BasePathMappingStg:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      RestApiId: !Ref ApiGatewayStgId
+      DomainName: !Ref DomainName
+      Stage: stg
+      BasePath: stg
