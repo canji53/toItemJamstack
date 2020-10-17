@@ -1,0 +1,30 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ToItem for s3 hosting with CloudFront(OAI).
+
+Parameters:
+  ServiceName:
+    Type: String
+    Default: toitem
+  TemplateBucketName:
+    Type: String
+    NoEcho: true
+  HostingBucketName:
+    Type: String
+    NoEcho: true
+  NakedDomainName:
+    Type: String
+    Default: toitem.info
+  CFSSLCertificateId:
+    Type: String
+    NoEcho: True
+
+Resources:
+  OaiHostingProd:
+    Type: AWS::CloudFormation::Stack
+    Properties:
+      TemplateURL: !Sub https://s3.amazonaws.com/${TemplateBucketName}/oai_hosting/oai_hosting.yml
+      Parameters:
+        ServiceName: !Ref ServiceName
+        DomainName: !Sub www.${NakedDomainName}
+        HostingBucketName: !Ref HostingBucketName
+        CFSSLCertificateId: !Ref CFSSLCertificateId
