@@ -5,15 +5,15 @@ Parameters:
   ServiceName:
     Type: String
     Default: toitem
-  NakidDomainName:
+  NakedDomainName:
     Type: String
     NoEcho: true
   CFSSLCertificateId:
     Type: String
     NoEcho: true
-  # ApiGatewayProdId:
-  #   Type: String
-  #   NoEcho: true
+  ApiGatewayProdId:
+    Type: String
+    NoEcho: true
   ApiGatewayStgId:
     Type: String
     NoEcho: true
@@ -22,19 +22,19 @@ Resources:
   DomainName:
     Type: AWS::ApiGateway::DomainName
     Properties:
-      DomainName: !Sub api.${NakidDomainName}
+      DomainName: !Sub api.${NakedDomainName}
       EndpointConfiguration:
         Types:
           - REGIONAL
       RegionalCertificateArn: !Sub arn:aws:acm:${AWS::Region}:${AWS::AccountId}:certificate/${CFSSLCertificateId}
 
-  # BasePathMappingProd:
-  #   Type: AWS::ApiGateway::BasePathMapping
-  #   Properties:
-  #     RestApiId: !Ref ApiGatewayProdId
-  #     DomainName: !Ref DomainName
-  #     Stage: prod
-  #     BasePath: prod
+  BasePathMappingProd:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      RestApiId: !Ref ApiGatewayProdId
+      DomainName: !Ref DomainName
+      Stage: prod
+      BasePath: prod
 
   BasePathMappingStg:
     Type: AWS::ApiGateway::BasePathMapping
