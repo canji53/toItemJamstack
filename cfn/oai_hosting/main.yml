@@ -8,10 +8,10 @@ Parameters:
   Environment:
     Type: String
     Default: stg
-  NakedDomain:
+  NakedDomainName:
     Type: String
     NoEcho: true
-  SubDomain:
+  SubDomainName:
     Type: String
     NoEcho: true
   HostingBucketName:
@@ -61,7 +61,7 @@ Resources:
       DistributionConfig:
         PriceClass: PriceClass_All
         Aliases:
-          - !Sub ${SubDomain}.${NakedDomain}
+          - !Sub ${SubDomainName}.${NakedDomainName}
         Origins:
           - DomainName: !GetAtt Bucket.DomainName
             Id: !Sub S3origin-${HostingBucketName}
