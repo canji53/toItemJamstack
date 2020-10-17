@@ -4,7 +4,7 @@ Description: ToItem for s3 hosting with CloudFront(OAI).
 Parameters:
   ServiceName:
     Type: String
-    Default: toitem
+    NoEcho: true
   TemplateBucketName:
     Type: String
     NoEcho: true
@@ -13,10 +13,10 @@ Parameters:
     NoEcho: true
   NakedDomainName:
     Type: String
-    Default: toitem.info
+    NoEcho: true
   CFSSLCertificateId:
     Type: String
-    NoEcho: True
+    NoEcho: true
 
 Resources:
   OaiHostingProd:
