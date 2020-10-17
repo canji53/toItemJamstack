@@ -37,4 +37,5 @@ jobs:
             --parameter-overrides \
               NakedDomainName=$NAKED_DOMAIN_NAME \
               CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_ID }} \
+              ApiGatewayProdId=${{ secrets.APIGW_PROD_ID }} \
               ApiGatewayStgId=${{ secrets.APIGW_STG_ID }}
