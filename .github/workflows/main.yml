@@ -33,6 +33,8 @@ jobs:
           aws s3 sync cfn/oai_hosting s3://${{ secrets.TEMPLATE_BUCKET_NAME }}/oai_hosting --delete
 
       - name: Deploy Stack
+        env:
+          NAKED_DOMAIN_NAME: toitem.info
         run: |
           cd cfn/oai_hosting
           aws deploy \
@@ -43,7 +45,8 @@ jobs:
             --force-upload true \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
-              
-            
-             
-             
+              ServiceName=$SERVICE_NAME \
+              NakedDomainName=$NAKED_DOMAIN_NAME \
+              TemplateBucketName=${{ secrets.TEMPLATE_BUCKET_NAME }} \
+              HostingBucketName=${{ secrets.HOSTING_BUCKET_NAME }} \
+              CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_ID }}
