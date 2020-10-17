@@ -37,7 +37,7 @@ jobs:
           NAKED_DOMAIN_NAME: toitem.info
         run: |
           cd cfn/oai_hosting
-          aws deploy \
+          aws cloudformation deploy \
             --stack-name $SERVICE_NAME-oai-static-hosting \
             --template-file main.yml \
             --s3-bucket ${{ secrets.TEMPLATE_BUCKET_NAME }} \
