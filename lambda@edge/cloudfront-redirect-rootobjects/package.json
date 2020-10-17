@@ -1,0 +1,20 @@
+{
+  "name": "cloudfront-redirect-rootobjects",
+  "version": "1.0.0",
+  "description": "Redirect root object for cloudfront x s3.",
+  "main": "app.js",
+  "author": "Canji",
+  "license": "MIT",
+  "jest": {
+    "testEnvironment": "node"
+  },
+  "scripts": {
+    "test": "jest --detectOpenHandles",
+    "test watch": "jest --watch"
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "aws-lambda-mock-context": "^3.2.1",
+    "jest": "^26.5.3"
+  }
+}
