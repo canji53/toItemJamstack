@@ -1,4 +1,4 @@
-name: Deployment for api gateway
+name: API Gateway
 
 on:
   pull_request:
