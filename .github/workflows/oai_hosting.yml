@@ -42,4 +42,4 @@ jobs:
               NakedDomainName=$NAKED_DOMAIN_NAME \
               SubDomainName=$SUB_DOMAIN_NAME \
               HostingBucketName=${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT \
-              CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_ID }}
+              CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_VIRGINIA_ID }}
