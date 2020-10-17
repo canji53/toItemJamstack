@@ -1,9 +1,6 @@
 name: Deployment for oai static hosting
 
 on:
-  push:
-    branches: 
-      - master
   pull_request:
     branches:
       - master
@@ -13,8 +10,8 @@ on:
 
 env:
   NAKED_DOMAIN: toitem.info
-  SUB_DOMAIN: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') }}
-  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') }}
+  SUB_DOMAIN: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
+  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
 
 jobs:
   deploy:
