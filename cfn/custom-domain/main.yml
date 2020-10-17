@@ -1,5 +1,5 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: Custom domain for api gateway.
+Description: Custom domain for API Gateway.
 
 Parameters:
   ServiceName:
