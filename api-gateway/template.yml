@@ -8,7 +8,7 @@ Parameters:
     Default: toItem
   Environment:
     Type: String
-    Default: Prod
+    Default: Stg
   SendGridApiKey:
     Type: String
     NoEcho: true
