@@ -42,7 +42,6 @@ jobs:
             --template-file main.yml \
             --s3-bucket ${{ secrets.TEMPLATE_BUCKET_NAME }} \
             --s3-prefix oai_hosting \
-            --force-upload true \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
               ServiceName=$SERVICE_NAME \
