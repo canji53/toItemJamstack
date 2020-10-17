@@ -26,9 +26,5 @@ jobs:
           aws-region: ap-northeast-1
 
       - name: Update Stack
-        if: ${{
-          (aws cloudformation describe-stacks --stack-name localing-admin-api-dev | jq '.Stacks[].StackStatus' == 'CREATE_COMPLETE') ||
-          (aws cloudformation describe-stacks --stack-name localing-admin-api-dev | jq '.Stacks[].StackStatus' == 'UPDATE_COMPLETE')
-          }}
         run: |
-          echo "aaa"
+          aws cloudformation describe-stacks --stack-name localing-admin-api-dev | jq '.Stacks[].StackStatus'
