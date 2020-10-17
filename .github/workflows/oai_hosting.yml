@@ -1,4 +1,4 @@
-name: Deployment for oai static hosting
+name: OAI Static Hosting
 
 on:
   pull_request:
