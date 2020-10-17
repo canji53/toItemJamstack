@@ -6,11 +6,11 @@ on:
       - master
       - staging
     types: [closed]
-    paths: 'api-gateway/**'
-    paths-ignore:
-      - '.events/**'
-      - '.gitignore'
-      - 'README.md'
+    paths:
+      - 'api-gateway/**'
+      - '!api-gateway/.events/**'
+      - '!api-gateway/.gitignore'
+      - '!api-gateway/README.md'
 
 env:
   ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
