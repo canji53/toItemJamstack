@@ -1,20 +1,20 @@
-name: Deployment for toItem
+name: Deployment for oai static hosting
 
 on:
-  push:
-    branches:
-      - master
   pull_request:
     branches:
       - master
-      - develop
+      - staging
     types: [closed]
+    paths: 'cfn/oai_hosting/**'
 
 env:
-  SERVICE_NAME: toitem
+  NAKED_DOMAIN: toitem.info
+  SUB_DOMAIN: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') }}
+  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') }}
 
 jobs:
-  cfn_hosting:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -28,24 +28,22 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ap-northeast-1
 
-      - name: Sync Template Files
-        run: |
-          aws s3 sync cfn/oai_hosting s3://${{ secrets.TEMPLATE_BUCKET_NAME }}/oai_hosting --delete
-
       - name: Deploy Stack
         env:
-          NAKED_DOMAIN_NAME: toitem.info
+          STACK_NAME: toitem-oai-static-hosting-$ENVIRONMENT
+          S3_PREFIX: oai-hosting-$ENVIRONMENT
+          HOSTING_BUCKET_NAME: ${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT
         run: |
           cd cfn/oai_hosting
           aws cloudformation deploy \
-            --stack-name $SERVICE_NAME-oai-static-hosting \
+            --stack-name $STACK_NAME \
             --template-file main.yml \
             --s3-bucket ${{ secrets.TEMPLATE_BUCKET_NAME }} \
-            --s3-prefix oai_hosting \
+            --s3-prefix $S3_PREFIX \
             --capabilities CAPABILITY_NAMED_IAM \
             --parameter-overrides \
-              ServiceName=$SERVICE_NAME \
-              NakedDomainName=$NAKED_DOMAIN_NAME \
-              TemplateBucketName=${{ secrets.TEMPLATE_BUCKET_NAME }} \
-              HostingBucketName=${{ secrets.HOSTING_BUCKET_NAME }} \
+              Environment=$ENVIRONMENT \
+              NakedDomain=$NAKED_DOMAIN \
+              SubDomain=$SUB_DOMAIN \
+              HostingBucketName=$HOSTING_BUCKET_NAME \
               CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_ID }}
