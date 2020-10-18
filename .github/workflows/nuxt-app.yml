@@ -1,0 +1,63 @@
+name: Nuxt App
+
+on:
+  pull_request:
+    branches:
+      - master
+      - staging
+    types: [closed]
+    paths:
+      - 'nuxt-app/**'
+      - '!nuxt-app/.eslintrc.js'
+      - '!nuxt-app/.gitignore'
+      - '!nuxt-app/README.md'
+
+env:
+  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') }}
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: ap-northeast-1
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v2-beta
+        with:
+          node-version: 12
+
+      - name: Linter and Formetter JS and Vue
+        run: |
+          cd nuxt-app
+          npm install
+          npm run lint:js
+          npm run lintfix
+
+      - name: Build Nuxt App
+        run: |
+          cd nuxt-app
+          MICROCMS_API_KEY=${{ secrets.MICROCMS_API_KEY }} GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }} npm run generate:$ENVIRONMENT
+
+      - name: Deploy to s3 static hosting
+        run: |
+          cd nuxt-app
+          aws s3 sync dist/ s3://${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT --delete
+
+      - name: Delete staging cloudfront cache
+        if: github.base_ref == 'staging'
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_STG_ID }} --paths '/*'
+
+      - name: Delete production cloudfront cache
+        if: github.base_ref == 'master'
+        run: |
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_PROD_ID }} --paths '/*'

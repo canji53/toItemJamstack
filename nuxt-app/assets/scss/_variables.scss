@@ -1,0 +1,40 @@
+// 色
+$base-color: #555;
+$base-thin-color: #5555;
+$concept-color: #d4c4b5;
+$concept-hover-color: #d4c4b5b7;
+$thin-color: #f0f0f0; // 引用の背景色
+$precode-color: #5555; // コードの背景色
+$link-color: #339AF0;
+$hover-color: #999; // ホバー時の色
+$opacity-rate: 0.75; // 透明化される割合
+
+$twitter-color: #1da1f3;
+$facebook-color: #3b5998;
+$pocket-color: #ef4056;
+$hatebu-color: #01a5df;
+$clipboard-color: #aaa;
+$instagram-color: #CF2E92;
+
+// フォントサイズ
+$title-font-size: 20px;
+$base-line-height-size: 16px;
+$middle-font-size: 16px;
+$base-font-size: 13px;
+$small-font-size: 11px;
+
+
+// アニメーションタイム
+$transition-time: .3s;
+
+// 各種セット幅
+$card-width: 300px;
+
+$column1-width: $card-width;
+$column2-width: $card-width * 2;
+$column3-width: $card-width * 3;
+
+$container-width: $column3-width;
+
+$article-width: 600px;
+$aside-width: 150px;
