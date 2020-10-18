@@ -14,6 +14,9 @@ Globals:
     Timeout: 3
 
 Resources:
+  #----------------#
+  # CloudfrontRedirectRootobjects
+  #----------------#
   CloudfrontRedirectRootobjects:
     Type: AWS::Serverless::Function
     Properties:
@@ -40,6 +43,41 @@ Resources:
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
 
+  #----------------#
+  # BasicAuth
+  #----------------#
+  BasicAuth:
+    Type: AWS::Serverless::Function
+    Properties:
+      FunctionName: !Sub ${ServiceName}-basic-auth
+      CodeUri: basic-auth/
+      Handler: app.lambdaHandler
+      Role: !GetAtt BasicAuthRole.Arn
+
+  BasicAuthRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Sub ${ServiceName}-basic-auth-role
+      Path: /
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+                - edgelambda.amazonaws.com
+                - lambda.amazonaws.com
+            Action:
+              - sts:AssumeRole
+      ManagedPolicyArns:
+        - arn:aws:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole
+
 Outputs:
   CloudfrontRedirectRootobjectsArn:
     Value: !GetAtt CloudfrontRedirectRootobjects.Arn
+  CloudfrontRedirectRootobjectsRoleArn:
+    Value: !GetAtt CloudfrontRedirectRootobjectsRole.Arn
+  BasicAuthArn:
+    Value: !GetAtt BasicAuth.Arn
+  BasicAuthRoleArn:
+    Value: !GetAtt BasicAuthRole.Arn

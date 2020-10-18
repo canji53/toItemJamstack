@@ -1,4 +1,4 @@
-name: Deployment for custom domain
+name: Custom Domain
 
 on:
   pull_request:
