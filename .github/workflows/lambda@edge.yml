@@ -56,7 +56,8 @@ jobs:
           EOF
           npm install
           npm run test
-          rm -rf node_modules
+          rm -rf node_modules package.json package-lock.json
+          npm install --production
 
       - name: Test cloudfront-redirect-rootobjects
         run: |
