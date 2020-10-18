@@ -84,4 +84,5 @@ jobs:
           sam deploy \
             --template-file deploy.yml \
             --stack-name toitem-lambda-edge \
-            --capabilities CAPABILITY_NAMED_IAM
+            --capabilities CAPABILITY_NAMED_IAM \
+            --region us-east-1
