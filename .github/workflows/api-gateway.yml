@@ -4,7 +4,7 @@ on:
   pull_request:
     branches:
       - master
-      - staging
+      - develop
     types: [closed]
     paths:
       - 'api-gateway/**'
@@ -13,10 +13,13 @@ on:
       - '!api-gateway/README.md'
 
 env:
-  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
-  ALLOW_ORIGIN: ${{ 
-    (github.base_ref == 'master' && 'https://www.toitem.info')  || 
-    (github.base_ref == 'staging' && 'https://stg.toitem.info') || 
+  ENVIRONMENT: ${{
+    (github.base_ref == 'master' && 'prod') ||
+    (github.base_ref == 'develop' && 'dev') ||
+    'dev' }}
+  ALLOW_ORIGIN: ${{
+    (github.base_ref == 'master' && 'https://www.toitem.info') ||
+    (github.base_ref == 'develop' && '*') ||
     '*' }}
 
 jobs:
