@@ -10,12 +10,7 @@ on:
       - '!lambda@edge/.events/**'
       - '!lambda@edge/.gitignore'
       - '!lambda@edge/README.md'
-
-env:
-  ALLOW_ORIGIN: ${{ 
-    (github.base_ref == 'master' && 'https://www.toitem.info')  || 
-    (github.base_ref == 'staging' && 'https://stg.toitem.info') || 
-    '*' }}
+  workflow_dispatch:
 
 jobs:
   deploy:
