@@ -19,4 +19,10 @@ class MicroCMS {
       `${process.env.microcmsBaseUri}/content?${querystring}`
     )
   }
+
+  async getContent(contentId, querystring) {
+    return await this.axios.$get(
+      `${process.env.microcmsBaseUri}/content/${contentId}?${querystring}`
+    )
+  }
 }
