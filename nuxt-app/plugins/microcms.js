@@ -29,4 +29,8 @@ class MicroCMS {
   async getAbout() {
     return await this.axios.$get(`${process.env.microcmsBaseUri}/about`)
   }
+
+  async getPolicy() {
+    return await this.axios.$get(`${process.env.microcmsBaseUri}/policy`)
+  }
 }
