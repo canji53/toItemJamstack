@@ -4,14 +4,13 @@ on:
   pull_request:
     branches:
       - master
-      - staging
     types: [closed]
     paths: 'cfn/oai_hosting/**'
 
 env:
   NAKED_DOMAIN_NAME: toitem.info
-  SUB_DOMAIN_NAME: ${{ (github.base_ref == 'master' && 'www') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
-  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') || 'stg' }}
+  SUB_DOMAIN_NAME: ${{ (github.base_ref == 'master' && 'www') || 'www' }}
+  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || 'prod' }}
 
 jobs:
   deploy:
