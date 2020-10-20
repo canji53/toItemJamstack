@@ -11,6 +11,7 @@ on:
       - '!api-gateway/.events/**'
       - '!api-gateway/.gitignore'
       - '!api-gateway/README.md'
+  workflow_dispatch:
 
 env:
   ENVIRONMENT: ${{
