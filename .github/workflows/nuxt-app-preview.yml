@@ -11,6 +11,8 @@ on:
       - '!nuxt-app/.gitignore'
       - '!nuxt-app/README.md'
   repository_dispatch:
+    branches:
+      - staging
     types: [preview_post]
 
 env:
