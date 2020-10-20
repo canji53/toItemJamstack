@@ -10,8 +10,6 @@
 </template>
 
 <script>
-import axios from "axios"
-
 import BreadCrumbs from "@/components/Molecules/BreadCrumbs"
 import ArticleTitle from "@/components/Molecules/ArticleTitle"
 import ArticleDate from "@/components/Molecules/ArticleDate"
@@ -26,13 +24,7 @@ export default {
     ContentBody,
   },
   async asyncData(context) {
-    const { data } = await axios.get(
-      "https://toitem.microcms.io/api/v1/policy",
-      {
-        headers: { "X-API-KEY": context.$config.microcmsApiKey },
-      }
-    )
-    return data
+    return await context.app.$microcms.getPolicy()
   },
   methods: {
     getBreadCrumbs() {

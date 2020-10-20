@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import ContentList from "@/components/Organisms/ContentList"
 
 export default {
@@ -14,15 +13,12 @@ export default {
   },
   async asyncData(context) {
     const limitation = 6
-    const latest = await axios.get(
-      `https://toitem.microcms.io/api/v1/content?limit=${limitation}`,
-      {
-        headers: { "X-API-KEY": context.$config.microcmsApiKey },
-      }
+    const latest = await context.app.$microcms.getContentList(
+      `limit=${limitation}`
     )
     return {
       latestTitle: "新着記事",
-      latestList: latest.data.contents,
+      latestList: latest.contents,
     }
   },
   head() {

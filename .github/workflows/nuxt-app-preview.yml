@@ -1,9 +1,8 @@
-name: Nuxt App
+name: Nuxt App Preview
 
 on:
   pull_request:
     branches:
-      - master
       - staging
     types: [closed]
     paths:
@@ -11,9 +10,13 @@ on:
       - '!nuxt-app/.eslintrc.js'
       - '!nuxt-app/.gitignore'
       - '!nuxt-app/README.md'
+  repository_dispatch:
+    branches:
+      - staging
+    types: [preview_post]
 
 env:
-  ENVIRONMENT: ${{ (github.base_ref == 'master' && 'prod') || (github.base_ref == 'staging' && 'stg') }}
+  ENVIRONMENT: stg
 
 jobs:
   deploy:
@@ -53,11 +56,5 @@ jobs:
           aws s3 sync dist/ s3://${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT --delete
 
       - name: Delete staging cloudfront cache
-        if: github.base_ref == 'staging'
         run: |
           aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_STG_ID }} --paths '/*'
-
-      - name: Delete production cloudfront cache
-        if: github.base_ref == 'master'
-        run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_PROD_ID }} --paths '/*'
