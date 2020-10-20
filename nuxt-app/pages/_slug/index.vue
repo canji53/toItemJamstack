@@ -7,7 +7,6 @@
 </template>
 
 <script>
-import axios from "axios"
 import cheerio from "cheerio"
 
 import Content from "@/components/Organisms/Content"
@@ -25,24 +24,21 @@ export default {
     /**
      * 記事情報を取得
      */
-    const { data } = await axios.get(
-      `https://toitem.microcms.io/api/v1/content/${context.params.slug}`,
-      {
-        headers: { "X-API-KEY": context.$config.microcmsApiKey },
-      }
-    )
+    const content = await context.app.$microcms.getContent(context.params.slug)
+
     /**
      * 目次用にheadingを整形
      */
-    const $ = cheerio.load(data.body)
+    const $ = cheerio.load(content.body)
     const headings = $("h1, h2, h3").toArray()
-    const toc = headings.map((data) => ({
-      text: data.children[0].data,
-      id: data.attribs.id,
-      name: data.name,
+    const toc = headings.map((content) => ({
+      text: content.children[0].data,
+      id: content.attribs.id,
+      name: content.name,
     }))
+
     return {
-      content: data,
+      content: content,
       headingList: toc,
     }
   },
