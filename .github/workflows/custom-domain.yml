@@ -6,6 +6,7 @@ on:
       - master
     types: [closed]
     paths: 'cfn/custom-domain/**'
+  workflow_dispatch:
 
 env:
   NAKED_DOMAIN_NAME: toitem.info
@@ -38,4 +39,4 @@ jobs:
               NakedDomainName=$NAKED_DOMAIN_NAME \
               CFSSLCertificateId=${{ secrets.CFSSL_CERTIFICATE_TOKYO_ID }} \
               ApiGatewayProdId=${{ secrets.APIGW_PROD_ID }} \
-              ApiGatewayStgId=${{ secrets.APIGW_STG_ID }}
+              ApiGatewayDevId=${{ secrets.APIGW_DEV_ID }}
