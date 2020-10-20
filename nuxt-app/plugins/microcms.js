@@ -6,6 +6,7 @@ export default function (context, inject) {
 class MicroCMS {
   constructor({ $axios, $config }) {
     this.axios = $axios
+    this.baseUri = "https://toitem.microcms.io/api/v1"
     this.setHeader($config)
   }
 
@@ -15,22 +16,20 @@ class MicroCMS {
   }
 
   async getContentList(querystring) {
-    return await this.axios.$get(
-      `${process.env.microcmsBaseUri}/content?${querystring}`
-    )
+    return await this.axios.$get(`${this.baseUri}/content?${querystring}`)
   }
 
   async getContent(contentId, querystring) {
     return await this.axios.$get(
-      `${process.env.microcmsBaseUri}/content/${contentId}?${querystring}`
+      `${this.baseUri}/content/${contentId}?${querystring}`
     )
   }
 
   async getAbout() {
-    return await this.axios.$get(`${process.env.microcmsBaseUri}/about`)
+    return await this.axios.$get(`${this.baseUri}/about`)
   }
 
   async getPolicy() {
-    return await this.axios.$get(`${process.env.microcmsBaseUri}/policy`)
+    return await this.axios.$get(`${this.baseUri}/policy`)
   }
 }
