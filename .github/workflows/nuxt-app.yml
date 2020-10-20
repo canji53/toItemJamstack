@@ -3,7 +3,7 @@ name: Nuxt App Preview
 on:
   pull_request:
     branches:
-      - staging
+      - master
     types: [closed]
     paths:
       - 'nuxt-app/**'
@@ -12,11 +12,11 @@ on:
       - '!nuxt-app/README.md'
   repository_dispatch:
     branches:
-      - staging
+      - master
     types: [preview_post]
 
 env:
-  ENVIRONMENT: stg
+  ENVIRONMENT: prod
 
 jobs:
   deploy:
@@ -55,6 +55,6 @@ jobs:
           cd nuxt-app
           aws s3 sync dist/ s3://${{ secrets.HOSTING_BUCKET_NAME }}-$ENVIRONMENT --delete
 
-      - name: Delete staging cloudfront cache
+      - name: Delete production cloudfront cache
         run: |
-          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_STG_ID }} --paths '/*'
+          aws cloudfront create-invalidation --distribution-id ${{ secrets.CLOUDFRONT_PROD_ID }} --paths '/*'
