@@ -21,6 +21,7 @@
     "@fortawesome/vue-fontawesome": "^2.0.0",
     "@nuxtjs/axios": "^5.12.0",
     "@nuxtjs/pwa": "^3.0.0-beta.20",
+    "@nuxtjs/sitemap": "^2.4.0",
     "cheerio": "^1.0.0-rc.3",
     "dayjs": "^1.8.35",
     "nuxt": "^2.14.0",

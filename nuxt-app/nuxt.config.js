@@ -132,6 +132,11 @@ export default {
         name: "apple-mobile-web-app-status-bar-style",
         content: "black-translucent",
       },
+      // google search console
+      {
+        name: "google-site-verification",
+        content: process.env.GSC_VERIFICATION_ID,
+      },
     ],
     link: [
       // favicon
@@ -297,6 +302,7 @@ export default {
     "@nuxtjs/axios",
     "@nuxtjs/pwa",
     "@nuxtjs/style-resources",
+    "@nuxtjs/sitemap",
     "nuxt-fontawesome",
     "nuxt-clipboard2",
     "vue-scrollto/nuxt",
@@ -335,6 +341,25 @@ export default {
           }))
         )
       return pages
+    },
+  },
+  sitemap: {
+    path: "/sitemap.xml",
+    hostname: baseUrl,
+    exclude: ["/403", "/404", "/about", "/contact", "/privacypolicy"],
+    routes(callback) {
+      const limitation = 100
+      axios
+        .get(`${microcmsApiBaseUri}/content?limit=${limitation}`, {
+          headers: { "X-API-KEY": process.env.MICROCMS_API_KEY },
+        })
+        .then((res) => {
+          const routes = res.data.contents.map((content) => {
+            return `/${content.id}`
+          })
+          callback(null, routes)
+        })
+        .catch(callback)
     },
   },
 }
