@@ -48,7 +48,10 @@ jobs:
       - name: Build Nuxt App
         run: |
           cd nuxt-app
-          MICROCMS_API_KEY=${{ secrets.MICROCMS_API_KEY }} GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }} npm run generate:$ENVIRONMENT
+          GA_TRACKING_ID=${{ secrets.GA_TRACKING_ID }} \
+            GSC_VERIFICATION_ID=${{ secrets.GSC_VERIFICATION_ID }} \
+            MICROCMS_API_KEY=${{ secrets.MICROCMS_API_KEY }} \
+            npm run generate:$ENVIRONMENT
 
       - name: Deploy to s3 static hosting
         run: |
