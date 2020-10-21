@@ -11,12 +11,15 @@ class MicroCMS {
   }
 
   setHeader(config) {
-    return {
+    const headers = {
       headers: {
         "X-API-KEY": config.microcmsApiKey,
-        "X-GLOBAL-DRAFT-KEY": config.microcmsGlobalDraftApiKey,
       },
     }
+    if (process.env.NODE_ENV !== "production") {
+      headers.headers["X-GLOBAL-DRAFT-KEY"] = config.microcmsGlobalDraftApiKey
+    }
+    return headers
   }
 
   async getContentList(querystring) {
