@@ -56,8 +56,6 @@
 </template>
 
 <script>
-import * as axios from "axios"
-
 import ContactDescription from "@/components/Molecules/ContactDescription"
 import InputName from "@/components/Molecules/InputName"
 import InputEmail from "@/components/Molecules/InputEmail"
@@ -139,19 +137,12 @@ export default {
     async send() {
       this.isLoading = true // ローディング開始
 
-      const response = await axios
-        .post(process.env.messageApi, {
-          name: this.contact.name,
-          email: this.contact.email,
-          subject: this.contact.subject,
-          body: this.contact.body,
-        })
-        .then((response) => {
-          return response
-        })
-        .catch((error) => {
-          return { data: { message: error.message } }
-        })
+      const response = await this.$myapi.sendMessage({
+        name: this.contact.name,
+        email: this.contact.email,
+        subject: this.contact.subject,
+        body: this.contact.body,
+      })
 
       if (response.status === 200) {
         this.isLoading = false // ローディング終了
@@ -159,7 +150,7 @@ export default {
         this.$router.push({ path: "/" })
       } else {
         this.response =
-          "メッセージの送信に失敗しました。しばらく時間をおいて送信するか、お手数ですが canji.preengineer@gmail.com に直接お問い合わせください。"
+          "メッセージの送信に失敗しました。しばらく時間をおいて送信するか、大変お手数ですが canji.preengineer@gmail.com に直接お問い合わせ願います。"
       }
 
       this.isLoading = false // ローディング終了
