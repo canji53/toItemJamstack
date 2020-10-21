@@ -6,30 +6,38 @@ export default function (context, inject) {
 class MicroCMS {
   constructor({ $axios, $config }) {
     this.axios = $axios
-    this.baseUri = "https://toitem.microcms.io/api/v1"
-    this.setHeader($config)
+    this.baseUri = process.env.microcmsApiBaseUri
+    this.headers = this.setHeader($config)
   }
 
   setHeader(config) {
-    this.axios.setHeader("X-API-KEY", config.microcmsApiKey)
-    this.axios.setHeader("X-GLOBAL-DRAFT-KEY", config.microcmsGlobalDraftApiKey)
+    return {
+      headers: {
+        "X-API-KEY": config.microcmsApiKey,
+        "X-GLOBAL-DRAFT-KEY": config.microcmsGlobalDraftApiKey,
+      },
+    }
   }
 
   async getContentList(querystring) {
-    return await this.axios.$get(`${this.baseUri}/content?${querystring}`)
+    return await this.axios.$get(
+      `${this.baseUri}/content?${querystring}`,
+      this.headers
+    )
   }
 
   async getContent(contentId, querystring) {
     return await this.axios.$get(
-      `${this.baseUri}/content/${contentId}?${querystring}`
+      `${this.baseUri}/content/${contentId}?${querystring}`,
+      this.headers
     )
   }
 
   async getAbout() {
-    return await this.axios.$get(`${this.baseUri}/about`)
+    return await this.axios.$get(`${this.baseUri}/about`, this.headers)
   }
 
   async getPolicy() {
-    return await this.axios.$get(`${this.baseUri}/policy`)
+    return await this.axios.$get(`${this.baseUri}/policy`, this.headers)
   }
 }
