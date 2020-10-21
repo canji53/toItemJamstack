@@ -8,8 +8,8 @@ const baseUrl =
     ? "http://localhost:3000"
     : `https://${subDomain}.toitem.info`
 
-const messageUri = `https://api.toitem.info/${environment}/message`
-const microcmsBaseUri = "https://toitem.microcms.io/api/v1"
+const myApiBaseUri = `https://api.toitem.info/${environment}`
+const microcmsApiBaseUri = "https://toitem.microcms.io/api/v1"
 
 // meta
 const lang = "ja"
@@ -266,7 +266,7 @@ export default {
   },
   privateRuntimeConfig: {
     microcmsApiKey: process.env.MICROCMS_API_KEY,
-    microcmsGlobalApiKey: process.env.MICROCMS_GLOBAL_API_KEY,
+    microcmsGlobalDraftApiKey: process.env.MICROCMS_GLOBAL_DRAFT_API_KEY,
   },
   publicRuntimeConfig: {
     microcmsApiKey:
@@ -281,14 +281,15 @@ export default {
   env: {
     baseUrl,
     siteName,
-    microcmsBaseUri,
-    messageUri,
+    myApiBaseUri,
+    microcmsApiBaseUri,
     gaTrackingId: process.env.GA_TRACKING_ID,
   },
   css: ["ress"],
   plugins: [
     { src: "@/plugins/ga.js", mode: "client" },
     { src: "@/plugins/microcms.js", ssr: true },
+    { src: "@/plugins/myapi.js", mode: "client" },
   ],
   components: true,
   buildModules: ["@nuxtjs/eslint-module"],
@@ -324,7 +325,7 @@ export default {
     async routes() {
       const limitation = 100
       const pages = await axios
-        .get(`${microcmsBaseUri}/content?limit=${limitation}`, {
+        .get(`${microcmsApiBaseUri}/content?limit=${limitation}`, {
           headers: { "X-API-KEY": process.env.MICROCMS_API_KEY },
         })
         .then((res) =>

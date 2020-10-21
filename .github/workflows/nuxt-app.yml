@@ -1,4 +1,4 @@
-name: Nuxt App Preview
+name: Nuxt App
 
 on:
   pull_request:

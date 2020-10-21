@@ -7,7 +7,6 @@
     "build": "nuxt build",
     "build:analyze": "nuxt build --analyze",
     "start": "nuxt start",
-    "generate:stg": "cross-env ENVIRONEMNT=stg nuxt generate",
     "generate:prod": "cross-env ENVIRONEMNT=prod nuxt generate",
     "generate:analyze": "nuxt generate --analyze",
     "lint": "npm run lint:js",

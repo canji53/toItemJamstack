@@ -14,9 +14,9 @@ Parameters:
   ApiGatewayProdId:
     Type: String
     NoEcho: true
-  # ApiGatewayStgId:
-  #   Type: String
-  #   NoEcho: true
+  ApiGatewayDevId:
+    Type: String
+    NoEcho: true
 
 Resources:
   DomainName:
@@ -36,10 +36,10 @@ Resources:
       Stage: prod
       BasePath: prod
 
-  # BasePathMappingStg:
-  #   Type: AWS::ApiGateway::BasePathMapping
-  #   Properties:
-  #     RestApiId: !Ref ApiGatewayStgId
-  #     DomainName: !Ref DomainName
-  #     Stage: stg
-  #     BasePath: stg
+  BasePathMappingDev:
+    Type: AWS::ApiGateway::BasePathMapping
+    Properties:
+      RestApiId: !Ref ApiGatewayDevId
+      DomainName: !Ref DomainName
+      Stage: dev
+      BasePath: dev
