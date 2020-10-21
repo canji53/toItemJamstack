@@ -132,6 +132,11 @@ export default {
         name: "apple-mobile-web-app-status-bar-style",
         content: "black-translucent",
       },
+      // google search console
+      {
+        name: "google-site-verification",
+        content: process.env.GSC_VERIFICATION_ID,
+      },
     ],
     link: [
       // favicon
