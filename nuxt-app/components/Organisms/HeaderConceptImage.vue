@@ -26,9 +26,12 @@ section {
   background-color: $concept-color;
 
   img {
-    width: 100%;
     height: 350px;
     object-fit: cover;
+
+    @include max-screen($container-width) {
+      width: 100%;
+    }
   }
 }
 </style>
