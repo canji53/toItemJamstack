@@ -28,6 +28,10 @@ section {
   img {
     height: 350px;
     object-fit: cover;
+
+    @include max-screen($container-width) {
+      width: 100%;
+    }
   }
 }
 </style>
