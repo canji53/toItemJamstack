@@ -19,7 +19,7 @@
 
 * Serverless, Jamstack, Atomic Design, Monorepo
 * JavaScript, Node.js
-* Vue.js / Nuxt.js
+* Vue 2 / Nuxt.js
 * SendGrid API, Font Awesome
 * AWS, API Gateway, Lambda, Lambda@Edge, S3, CloudFront (OAI), IAM
 * AWS SAM, AWS CLI, CloudFormation
