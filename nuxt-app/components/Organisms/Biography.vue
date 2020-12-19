@@ -21,9 +21,6 @@
         <li>
           <ProfileToFolioIcon :url="tofolioUrl" />
         </li>
-        <li>
-          <ProfileLocalingIcon :url="localingUrl" />
-        </li>
       </ul>
     </div>
   </section>
@@ -61,7 +58,6 @@ export default {
     instagramUrl: "https://www.instagram.com/canji53/",
     tologUrl: "https://www.tolog.site",
     tofolioUrl: "https://canji53.github.io/toFolio/",
-    localingUrl: "https://www.localing.ml/",
   }),
 }
 </script>
